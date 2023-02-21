@@ -5,13 +5,13 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.Test;
+import ru.peremetova.sprint7.api.client.OrdersClient;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.hasItems;
 
 public class OrdersListTest {
 
-    public static final String API_V_1_ORDERS = "/api/v1/orders";
+    private final OrdersClient ordersClient = new OrdersClient();
 
     @Before
     public void setUp() {
@@ -19,14 +19,12 @@ public class OrdersListTest {
     }
 
     @Test
-    @DisplayName("Получение списка заказов:" + API_V_1_ORDERS)
+    @DisplayName("Получение списка заказов")
     @Description("Базовая проверка получения списка заказов без прараметров.")
     public void getOrdersTest() {
-        given()
-                .get(API_V_1_ORDERS)
-                .then()
+        ordersClient.getOrders()
+                .statusCode(200)
                 .assertThat()
-                .body("orders", hasItems())
-                .statusCode(200);
+                .body("orders", hasItems());
     }
 }

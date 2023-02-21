@@ -1,4 +1,4 @@
-package ru.peremetova.sprint7.data;
+package ru.peremetova.sprint7.api.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

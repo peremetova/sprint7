@@ -1,9 +1,8 @@
-package ru.peremetova.sprint7.data;
+package ru.peremetova.sprint7.api.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
 public class Authorization {
     private String login;
     private String password;

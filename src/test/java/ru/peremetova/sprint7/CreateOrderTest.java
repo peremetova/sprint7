@@ -7,15 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import ru.peremetova.sprint7.data.Order;
+import ru.peremetova.sprint7.api.client.OrdersClient;
+import ru.peremetova.sprint7.api.data.Order;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
 
-    public static final String API_V_1_ORDERS = "/api/v1/orders";
+    private final OrdersClient ordersClient = new OrdersClient();
+
     private Order order = new Order(
             "Naruto",
             "Uchiha",
@@ -50,18 +51,14 @@ public class CreateOrderTest {
     }
 
     @Test
-    @DisplayName("Создание заказа: " + API_V_1_ORDERS)
+    @DisplayName("Создание заказа")
     @Description("Проверка создания заказа.")
     public void createOrderTest() {
         order.setColor(color);
-        given()
-                .header("Content-type", "application/json")
-                .body(order)
-                .when()
-                .post(API_V_1_ORDERS)
-                .then()
+        ordersClient
+                .createOrder(order)
+                .statusCode(201)
                 .assertThat()
-                .body("track", notNullValue())
-                .statusCode(201);
+                .body("track", notNullValue());
     }
 }
